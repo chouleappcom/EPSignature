@@ -10,7 +10,6 @@ Signature component for iOS written in Swift
 
 [![Platform](https://img.shields.io/cocoapods/p/EPSignature.svg?style=flat)](http://cocoapods.org/pods/EPSignature)
 [![Swift 5.0](https://img.shields.io/badge/Swift-5.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
-[![Version](https://img.shields.io/cocoapods/v/EPSignature.svg?style=flat)](https://cocoapods.org/?q=EPsignature)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](http://img.shields.io/badge/license-MIT-33e0ff.svg)](https://github.com/ipraba/EPSignature/blob/master/LICENSE)
 [![Twitter: @HaveYouMetPrabu](https://img.shields.io/badge/contact-@HaveYouMetPrabu-blue.svg?style=flat)](https://twitter.com/HaveYouMetPrabu)
@@ -25,7 +24,7 @@ Signature component for iOS written in Swift
 
 EPSignature is available through CocoaPods. To install it, simply add the following line to your Podfile:
 ```ruby
-pod "EPSignature", :git => 'https://github.com/ekscrypto/EPSignature.git', :tag => '1.0.6-swift5'
+pod "EPSignature", :git => 'https://github.com/ekscrypto/EPSignature.git', :tag => '1.0.7'
 ```
 
 ##### [Carthage](https://github.com/Carthage/Carthage#if-youre-building-for-ios)
