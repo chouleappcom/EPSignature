@@ -20,9 +20,10 @@ open class EPSignatureView: UIView {
     
     open var strokeColor = UIColor.black
     open var strokeWidth: CGFloat = 2.0 {
-	    didSet { bezierPath.lineWidth = strokeWidth }
+        didSet { bezierPath.lineWidth = strokeWidth }
     }
     open var isSigned: Bool = false
+    open var disablePanGesturesOnTouch: Bool = false
     
     // MARK: - Initializers
     
@@ -49,9 +50,32 @@ open class EPSignatureView: UIView {
     
     
     // MARK: - Touch Functions
+    var panGestureRecognizersToReEnable: [UIPanGestureRecognizer] = []
+    func disablePanGestureRecognizers() {
+        guard disablePanGesturesOnTouch else { return }
+        var viewUnderTest: UIView? = self
+        repeat {
+            let recognizers = viewUnderTest?.gestureRecognizers?.filter({$0 is UIPanGestureRecognizer }) as? [UIPanGestureRecognizer] ?? []
+            let recognizersToDisable = recognizers.filter({ $0.isEnabled })
+            for recognizer in recognizersToDisable {
+                self.panGestureRecognizersToReEnable.append(recognizer)
+                recognizer.isEnabled = false
+            }
+            viewUnderTest = viewUnderTest?.superview
+        } while viewUnderTest != nil
+    }
+    
+    func reEnablePanGestureRecognizers() {
+        DispatchQueue.main.async {
+            for panRecognizer in self.panGestureRecognizersToReEnable {
+                panRecognizer.isEnabled = true
+            }
+            self.panGestureRecognizersToReEnable.removeAll()
+        }
+    }
     
     func addLongPressGesture() {
-        //Long press gesture is used to keep clear dots in the canvas
+        //Long press gesture is used to add dots to the canvas
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(EPSignatureView.longPressed(_:)))
         longPressGesture.minimumPressDuration = 1.5
         self.addGestureRecognizer(longPressGesture)
@@ -63,11 +87,13 @@ open class EPSignatureView: UIView {
         bezierPath.move(to: touchPoint)
         bezierPath.addArc(withCenter: touchPoint, radius: 2, startAngle: 0, endAngle: endAngle, clockwise: true)
         setNeedsDisplay()
+        reEnablePanGestureRecognizers()
     }
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-
+        
         if let currentPoint = touchPoint(touches) {
+            disablePanGestureRecognizers()
             isSigned = true
             bezierPoints[0] = currentPoint
             bezierCounter = 0
@@ -94,6 +120,7 @@ open class EPSignatureView: UIView {
     
     override open func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         bezierCounter = 0
+        reEnablePanGestureRecognizers()
     }
     
     func touchPoint(_ touches: Set<UITouch>) -> CGPoint? {
