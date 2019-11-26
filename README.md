@@ -48,6 +48,8 @@ Just drag and drop the files in `Pod/Classes` folder into your project
 6. Also can be embedded in any container view
 7. Can extract the signature as Image
 8. Draws smoothly
+9. Compatible with iOS 13 modal presentation style
+10. Support for embedding in UICollectionView, UIScollView and UITableView
 
 ### Initialization of EPSignatureViewController
 ```swift
@@ -77,6 +79,7 @@ Properties | Description
 **`strokeColor`**|`Stroke color of the signature`
 **`strokeWidth`**|`Stroke width of the signature`
 **`isSigned`**|`Bool value checks whether the user has signed or not`
+**`disablePanGesturesOnTouch`**|`Enable to automatically disable all UIPanGestureRecognizer in the view hierarchy when a touch is detected within the view, will be re-enabled automatically`
 
 ### EPSignatureViewController Delegates
 ```swift
